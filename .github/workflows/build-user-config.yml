@@ -114,6 +114,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install pip
+        run: python3 -m ensurepip --upgrade
+
       - name: Pin west
         run: pip install west==1.2.0
 
