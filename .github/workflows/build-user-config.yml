@@ -114,12 +114,6 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install pip
-        run: python3 -m ensurepip --upgrade
-
-      - name: Pin west
-        run: pip install west==1.2.0
-
       - name: West Init
         working-directory: ${{ env.base_dir }}
         run: west init -l "${{ env.base_dir }}/${{ inputs.config_path }}"
@@ -160,7 +154,7 @@ jobs:
           if ! (grep "CONFIG_ZMK_BOARD_COMPAT=y" "${{ env.build_dir }}/zephyr/.config" > /dev/null)
           then
             original_board=$(echo "${{ matrix.board }}" | sed -e 's$/.*$$')
-            west boards --board-root module --board-root . --board "${original_board}" --format "{qualifiers}" | grep "zmk" > /dev/null
+            west boards --board-root module --board-root . --board "${original_board}" --format "{name}" | grep "zmk" > /dev/null
 
             if [ $? -ne 0 ]
             then
